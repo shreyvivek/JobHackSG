@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "app.Main",
+      "projectName": "JobHackSG_176357eb"
+    },
+    {
+      "type": "java",
+      "name": "Launch JobHackSG Main",
+      "request": "launch",
+      "mainClass": "app.Main",
+      "projectName": "JobHackSG"
+    }
+  ]
+}
