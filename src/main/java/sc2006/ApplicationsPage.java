@@ -1,31 +1,22 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
+import java.util.List;
+
 public class ApplicationsPage {
 
-    /**
-     * Default constructor
-     */
-    public ApplicationsPage() {
+    public ApplicationsPage() {}
+
+    public void displayApplications(Application[] applicationList) {
+        for(var a : applicationList){
+            System.out.println("#%d job=%d status=%s note=%s".formatted(a.getAppId(), a.getJobId(), a.getStatus(), a.getNote()));
+        }
     }
 
-    /**
-     * @param applicationList[]
-     */
-    public void displayApplications(Application applicationList[]) {
-        // TODO implement here
+    public Application updateApplicationStatus(int appId, String status) {
+        return new ApplicationController().updateApplication(appId, status, null);
     }
 
-    /**
-     * @param appId 
-     * @param status
-     */
-    public void updateApplicationStatus(int appId, String status) {
-        // TODO implement here
+    public List<Application> loadForUser(int userId){
+        return new ApplicationController().listApplications(userId);
     }
-
 }

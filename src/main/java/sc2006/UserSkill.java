@@ -1,38 +1,24 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
 public class UserSkill {
+    private int userId;
+    private int skillId;
+    private int proficiency; // 1..5
+    private String source;   // "self", "resume", "course"
 
-    /**
-     * Default constructor
-     */
-    public UserSkill() {
+    public UserSkill(){}
+
+    public UserSkill(int userId, int skillId, int proficiency, String source) {
+        this.userId = userId;
+        this.skillId = skillId;
+        this.proficiency = proficiency;
+        this.source = source;
     }
 
-    /**
-     * 
-     */
-    private int userId;
+    public int getUserId(){ return userId; }
+    public int getSkillId(){ return skillId; }
+    public int getProficiency(){ return proficiency; }
+    public String getSource(){ return source; }
 
-    /**
-     * 
-     */
-    private int  skillId;
-
-    /**
-     * 
-     */
-    private int proficiency;
-
-    /**
-     * 
-     */
-    private String source;
-
-
-
+    public void setProficiency(int p){ this.proficiency = p; }
 }

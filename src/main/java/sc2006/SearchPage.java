@@ -1,37 +1,21 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
+import java.util.List;
+import java.util.Map;
+
 public class SearchPage {
 
-    /**
-     * Default constructor
-     */
-    public SearchPage() {
+    public SearchPage() {}
+
+    public void enterQuery(String query) { /* UI capture */ }
+
+    public List<JobPosting> applyFilters(Map<String,Object> criteria) {
+        return new JobSearchController().filterJobs(criteria);
     }
 
-    /**
-     * @param query
-     */
-    public void enterQuery(void query) {
-        // TODO implement here
+    public void displayResults(JobPosting[] jobList) {
+        for(var j : jobList){
+            System.out.println("%s — %s".formatted(j.getTitle(), j.getCompany()));
+        }
     }
-
-    /**
-     * @param criteria
-     */
-    public void applyFilters(void criteria) {
-        // TODO implement here
-    }
-
-    /**
-     * @param jobList[]
-     */
-    public void displayResults(JobPosting jobList[]) {
-        // TODO implement here
-    }
-
 }

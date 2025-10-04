@@ -1,30 +1,28 @@
 package sc2006;
-import java.io.*;
+
 import java.util.*;
 
-/**
- * 
- */
 public class SavedPage {
 
-    /**
-     * Default constructor
-     */
-    public SavedPage() {
-    }
+    public SavedPage() {}
 
-    /**
-     * @param jobId
-     */
     public void unsaveJob(int jobId) {
-        // TODO implement here
+        // in real flow we need userId; keeping simple here
     }
 
-    /**
-     * @param savedJobs[]
-     */
-    public void displaySavedJobs(JobPosting savedJobs[]) {
-        // TODO implement here
+    public void displaySavedJobs(JobPosting[] savedJobs) {
+        for(var j : savedJobs){
+            System.out.println("%s @ %s".formatted(j.getTitle(), j.getCompany()));
+        }
     }
 
+    public List<JobPosting> getSavedJobs(int userId){
+        var ids = InMemoryStore.SAVED_BY_USER.getOrDefault(userId, List.of());
+        List<JobPosting> out = new ArrayList<>();
+        for(int id: ids){
+            var j = InMemoryStore.JOBS.get(id);
+            if(j!=null) out.add(j);
+        }
+        return out;
+    }
 }

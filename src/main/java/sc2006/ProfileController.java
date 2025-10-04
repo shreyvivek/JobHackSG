@@ -1,114 +1,64 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
+import java.util.*;
+import static sc2006.Exceptions.*;
+
 public class ProfileController {
 
-    /**
-     * Default constructor
-     */
-    public ProfileController() {
+    public ProfileController() {}
+
+    /** UC-3: load profile */
+    public User getProfile(int userId) {
+        var u = InMemoryStore.USERS.get(userId);
+        if(u == null) throw new NotFound("User not found");
+        return u;
     }
 
-    /**
-     * @param userId
-     */
-    public void getProfile(int userId) {
-        // TODO implement here
+    public User findProfile(int userId){ return getProfile(userId); }
+    public User fetchProfile(int userId){ return getProfile(userId); }
+
+    /** UC-3: display (boundary delegates to page) */
+    public User displayProfile(int userId){ return getProfile(userId); }
+
+    /** UC-3: editable fields (boundary concern, return map to render) */
+    public Map<String,Object> displayEditableFields(int userId){
+        var u = getProfile(userId);
+        Map<String,Object> m = new LinkedHashMap<>();
+        m.put("name", u.getName());
+        m.put("school", u.getSchool());
+        m.put("gradYear", u.getGradYear());
+        return m;
     }
 
-    /**
-     * @param userId
-     */
-    public void findProfile(int userId) {
-        // TODO implement here
+    /** UC-3: submit changes */
+    public User updateProfile(int userId, Map<String,Object> updatedFields){
+        var u = getProfile(userId);
+        if(updatedFields.containsKey("name")) u.setName((String)updatedFields.get("name"));
+        if(updatedFields.containsKey("school")) u.setSchool((String)updatedFields.get("school"));
+        if(updatedFields.containsKey("gradYear")) u.setGradYear((Integer)updatedFields.get("gradYear"));
+        return u;
     }
 
-    /**
-     * @param userId
-     */
-    public void fetchProfile(int userId) {
-        // TODO implement here
-    }
+    public void profileMsg(String message){ /* UI message hook */ }
+    public void profileError(String message){ /* UI message hook */ }
 
-    /**
-     * @param userId
-     */
-    public void displayProfile(int userId) {
-        // TODO implement here
+    /** UC-3: Manage skills */
+    public void addSkill(int userId, int skillId){
+        var skill = InMemoryStore.SKILLS.get(skillId);
+        if(skill == null) throw new NotFound("Skill not found");
+        var list = InMemoryStore.USER_SKILLS.computeIfAbsent(userId, k->new ArrayList<>());
+        boolean exists = list.stream().anyMatch(us -> us.getSkillId()==skillId);
+        if(!exists) list.add(new UserSkill(userId, skillId, 3, "self"));
     }
+    public void insertSkill(int userId, int skillId){ addSkill(userId, skillId); }
 
-    /**
-     * @param userId
-     */
-    public void displayEditableFields(int userId) {
-        // TODO implement here
+    public void deleteSkill(int userId, int skillId){
+        var list = InMemoryStore.USER_SKILLS.getOrDefault(userId, new ArrayList<>());
+        list.removeIf(us -> us.getSkillId()==skillId);
     }
+    public void removeSkill(int userId, int skillId){ deleteSkill(userId, skillId); }
 
-    /**
-     * @param updatedFields
-     */
-    public void submitChanges(void updatedFields) {
-        // TODO implement here
+    public List<UserSkill> listSkills(int userId){
+        return new ArrayList<>(InMemoryStore.USER_SKILLS.getOrDefault(userId, List.of()));
     }
-
-    /**
-     * @param userId 
-     * @param updatedFields
-     */
-    public void updateProfile(int userId, void updatedFields) {
-        // TODO implement here
-    }
-
-    /**
-     * @param message
-     */
-    public void profileMsg(String message) {
-        // TODO implement here
-    }
-
-    /**
-     * @param message
-     */
-    public void profileError(String message) {
-        // TODO implement here
-    }
-
-    /**
-     * @param userId 
-     * @param skillId 
-     * @param proficiency
-     */
-    public void addSkill(int userId, int skillId) {
-        // TODO implement here
-    }
-
-    /**
-     * @param userId 
-     * @param skillId 
-     * @param proficiency
-     */
-    public void insertSkill(int userId, int skillId) {
-        // TODO implement here
-    }
-
-    /**
-     * @param userId 
-     * @param skillId
-     */
-    public void deleteSkill(int userId, int skillId) {
-        // TODO implement here
-    }
-
-    /**
-     * @param userId 
-     * @param skillId
-     */
-    public void removeSkill(int userId, int skillId) {
-        // TODO implement here
-    }
-
 }

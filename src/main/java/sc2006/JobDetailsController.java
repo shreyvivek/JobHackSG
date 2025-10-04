@@ -1,76 +1,38 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
+import java.util.*;
+import static sc2006.Exceptions.*;
+
 public class JobDetailsController {
 
-    /**
-     * Default constructor
-     */
-    public JobDetailsController() {
+    public JobDetailsController() {}
+
+    /** UC-8 get job details */
+    public JobPosting getJob(int jobId) {
+        var job = InMemoryStore.JOBS.get(jobId);
+        if(job == null) throw new NotFound("Job not found");
+        if(!job.isActive()) throw new Validation("Job has been removed!");
+        return job;
     }
 
-    /**
-     * @param jobId
-     */
-    public void getJob(int jobId) {
-        // TODO implement here
-    }
+    public JobPosting findJob(int jobId){ return getJob(jobId); }
+    public JobPosting fetchJob(int jobId){ return getJob(jobId); }
 
-    /**
-     * @param jobId
-     */
-    public void findJob(int jobId) {
-        // TODO implement here
-    }
-
-    /**
-     * @param jobId
-     */
-    public void saveJob(int jobId) {
-        // TODO implement here
-    }
-
-    /**
-     * @param userId 
-     * @param jobId
-     */
+    /** UC-9 save/unsave */
     public void saveJob(int userId, int jobId) {
-        // TODO implement here
+        var job = getJob(jobId);
+        var list = InMemoryStore.SAVED_BY_USER.computeIfAbsent(userId, k->new ArrayList<>());
+        if(!list.contains(job.getJobId())) list.add(job.getJobId());
     }
 
-    /**
-     * @param jobId
-     */
-    public void fetchJob(int jobId) {
-        // TODO implement here
-    }
+    /** overload kept for template compatibility (no userId) — not used */
+    public void saveJob(int jobId) { throw new Validation("User id required"); }
 
-    /**
-     * @param message
-     */
-    public void jobError(String message) {
-        // TODO implement here
-    }
+    public void jobError(String message){ /* UI hook */ }
+    public void jobMsg(String message){ /* UI hook */ }
 
-    /**
-     * @param message
-     */
-    public void jobMsg(String message) {
-        // TODO implement here
+    /** UC-10 log application from details page */
+    public Application logApplication(int userId, int jobId, String status, String note) {
+        return new ApplicationController().createApplication(userId, jobId, status==null?"Applied":status);
     }
-
-    /**
-     * @param userId 
-     * @param jobId 
-     * @param status 
-     * @param note
-     */
-    public void logApplication(int userId, int jobId, String status, String note) {
-        // TODO implement here
-    }
-
 }

@@ -1,38 +1,26 @@
 package sc2006;
 
-import java.io.*;
-import java.util.*;
+import java.util.List;
 
-/**
- * 
- */
 public class AdminDashboard {
 
-    /**
-     * Default constructor
-     */
-    public AdminDashboard() {
-    }
+    public AdminDashboard() {}
 
-    /**
-     * @param runId
-     */
     public void displayIngestionStatus(int runId) {
-        // TODO implement here
+        var run = new AdminIngestionController().recheckIngestion(runId);
+        if(run!=null){
+            System.out.println("Run #" + run.getRunId() + " status=" + run.getStatus());
+        } else {
+            System.out.println("No such run");
+        }
     }
 
-    /**
-     * 
-     */
-    public void triggerIngestion() {
-        // TODO implement here
+    public IngestionRun triggerIngestion() {
+        return new AdminIngestionController().runIngestion();
     }
 
-    /**
-     * @param runId
-     */
     public void viewLogs(int runId) {
-        // TODO implement here
+        List<String> logs = new AdminIngestionController().viewLogs(runId);
+        logs.forEach(System.out::println);
     }
-
 }

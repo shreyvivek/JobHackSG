@@ -1,33 +1,19 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
 public class Recommendation {
+    private int userId;
+    private int jobId;
+    public int matchScore; // 0..100
 
-    /**
-     * Default constructor
-     */
-    public Recommendation() {
+    public Recommendation(){}
+
+    public Recommendation(int userId, int jobId, int matchScore) {
+        this.userId = userId;
+        this.jobId = jobId;
+        this.matchScore = matchScore;
     }
 
-    /**
-     * 
-     */
-    private int userId;
-
-    /**
-     * 
-     */
-    private int jobId;
-
-    /**
-     * 
-     */
-    public int matchScore;
-
-
-
+    public int getUserId(){ return userId; }
+    public int getJobId(){ return jobId; }
+    public int getMatchScore(){ return matchScore; }
 }

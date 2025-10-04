@@ -1,30 +1,18 @@
 package sc2006;
-import java.io.*;
+
 import java.util.*;
 
-/**
- * 
- */
 public class TrendsPage {
 
-    /**
-     * Default constructor
-     */
-    public TrendsPage() {
+    public TrendsPage() {}
+
+    public void displaySectorTrends(Object[] sectorStats) { /* UI */ }
+
+    public Sector selectSector(int sectorId) {
+        return InMemoryStore.SECTORS.get(sectorId);
     }
 
-    /**
-     * @param sectorStats[]
-     */
-    public void displaySectorTrends(void sectorStats[]) {
-        // TODO implement here
+    public List<Sector> listSectors(){
+        return new ArrayList<>(InMemoryStore.SECTORS.values());
     }
-
-    /**
-     * @param sectorId
-     */
-    public void selectSector(int sectorId) {
-        // TODO implement here
-    }
-
 }

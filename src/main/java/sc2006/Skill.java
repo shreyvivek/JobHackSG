@@ -1,30 +1,20 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
+import java.util.Objects;
+
 public class Skill {
-
-    /**
-     * Default constructor
-     */
-    public Skill() {
-    }
-
-    /**
-     * 
-     */
     private int skillId;
-
-    /**
-     * 
-     */
     private String name;
 
+    public Skill(){}
 
+    public Skill(int skillId, String name) {
+        this.skillId = skillId;
+        this.name = Objects.requireNonNull(name, "name");
+    }
 
+    public int getSkillId(){ return skillId; }
+    public String getName(){ return name; }
 
-
+    @Override public String toString(){ return name + " (#" + skillId + ")"; }
 }

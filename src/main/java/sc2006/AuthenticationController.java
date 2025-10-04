@@ -1,60 +1,64 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * IMPORTANT: NOT SURE WHETHER THESE METHODS NEEDS ARGUMENTS. 
- * NOT SURE ON TYPES OF SOME ARGUMENTS.
- */
+import java.util.Map;
+import static sc2006.Exceptions.*;
+
 public class AuthenticationController {
 
-    /**
-     * Default constructor
-     */
-    public AuthenticationController() {
+    public AuthenticationController() {}
+
+    /** UC-1 Register */
+    public User register(Map<String, Object> userData) {
+        String email = str(userData.get("email"));
+        String password = str(userData.get("password"));
+        String name = (String) userData.get("name");
+        String school = (String) userData.get("school");
+        Integer gy = (Integer) userData.get("gradYear");
+        int gradYear = gy == null ? 0 : gy.intValue();
+
+        if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+            throw new Validation("Email and password required");
+        }
+
+        if (InMemoryStore.EMAIL_TO_USER.containsKey(email)) {
+            throw new Conflict("Email already registered");
+        }
+
+        String salt = PasswordUtil.newSalt();
+        String hash = PasswordUtil.hash(password, salt);
+        int id = InMemoryStore.nextUserId();
+
+        if (name == null) name = "";
+        if (school == null) school = "";
+
+        User u = new User(id, name, email, hash, salt, school, gradYear);
+        InMemoryStore.USERS.put(id, u);
+        InMemoryStore.EMAIL_TO_USER.put(email, id);
+
+        return u;
     }
 
-    /**
-     * @param email 
-     * @param password
-     */
-    public void login(String email, String password) {
-        // TODO implement here
+    /** UC-2 Login */
+    public User login(String email, String password) {
+        Integer id = InMemoryStore.EMAIL_TO_USER.get(email);
+        if (id == null) throw new Auth("Invalid email or password");
+        User u = InMemoryStore.USERS.get(id);
+        String h = PasswordUtil.hash(password, u.getPasswordSalt());
+        if (!h.equals(u.getPasswordHash())) throw new Auth("Invalid email or password");
+        return u;
     }
 
-    /**
-     * @param userData
-     */
-    public void register(void userData) {
-        // TODO implement here
+    public void logout(int sessionId) { /* no-op for in-memory demo */ }
+
+    public User findByEmail(String email){
+        Integer id = InMemoryStore.EMAIL_TO_USER.get(email);
+        if (id == null) throw new NotFound("No such user");
+        return InMemoryStore.USERS.get(id);
     }
 
-    /**
-     * @param sessionId
-     */
-    public void logout(int sessionId) {
-        // TODO implement here
-    }
+    public void authSuccess(String sessionToken){ /* UI/boundary uses this */ }
 
-    /**
-     * @param email
-     */
-    public void findByEmail(String email) {
-        // TODO implement here
-    }
+    public void authFailure(String message){ /* UI/boundary uses this */ }
 
-    /**
-     * @param sessionToken
-     */
-    public void authSuccess(void sessionToken) {
-        // TODO implement here
-    }
-
-    /**
-     * @param message
-     */
-    public void authFailure(String message) {
-        // TODO implement here
-    }
-
+    private static String str(Object o){ return o == null ? null : o.toString(); }
 }

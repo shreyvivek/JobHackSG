@@ -1,38 +1,21 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
 public class LoginPage {
+    private String lastError;
 
-    /**
-     * Default constructor
-     */
-    public LoginPage() {
+    public LoginPage() {}
+
+    public void enterCredentials(String email, String password) { /* UI capture */ }
+
+    public User submitLogin(String email, String password) {
+        try{
+            return new AuthenticationController().login(email, password);
+        } catch (Exceptions.Auth e){
+            showError(e.getMessage());
+            return null;
+        }
     }
 
-    /**
-     * @param email 
-     * @param password
-     */
-    public void enterCredentials(String email, String password) {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void submitLogin() {
-        // TODO implement here
-    }
-
-    /**
-     * @param message
-     */
-    public void showError(String message) {
-        // TODO implement here
-    }
-
+    public void showError(String message) { this.lastError = message; }
+    public String getLastError(){ return lastError; }
 }

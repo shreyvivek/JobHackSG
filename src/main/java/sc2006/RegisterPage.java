@@ -1,37 +1,16 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
+import java.util.Map;
+
 public class RegisterPage {
 
-    /**
-     * Default constructor
-     */
-    public RegisterPage() {
+    public RegisterPage() {}
+
+    public void enterRegistrationDetails(Map<String,Object> userData) { /* UI capture */ }
+
+    public User submitRegistration(Map<String,Object> userData) {
+        return new AuthenticationController().register(userData);
     }
 
-    /**
-     * @param userData
-     */
-    public void enterRegistrationDetails(void userData) {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void submitRegistration() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void showConfirmation() {
-        // TODO implement here
-    }
-
+    public void showConfirmation(){ /* UI */ }
 }

@@ -1,30 +1,22 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
+import java.util.List;
+
 public class ForYouPage {
 
-    /**
-     * Default constructor
-     */
-    public ForYouPage() {
+    public ForYouPage() {}
+
+    public void displayRecommendations(Recommendation[] recommendations) {
+        for(var r : recommendations){
+            System.out.println("Job #" + r.getJobId() + " score=" + r.getMatchScore());
+        }
     }
 
-    /**
-     * @param recommendations[]
-     */
-    public void displayRecommendations(Recommendation recommendations[]) {
-        // TODO implement here
+    public JobPosting selectJob(int jobId) {
+        return new JobDetailsController().getJob(jobId);
     }
 
-    /**
-     * @param jobId
-     */
-    public void selectJob(int jobId) {
-        // TODO implement here
+    public List<Recommendation> load(int userId){
+        return new RecommendationController().getRecommendations(userId);
     }
-
 }

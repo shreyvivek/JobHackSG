@@ -1,66 +1,25 @@
 package sc2006;
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
+import java.util.Map;
+
 public class ProfilePage {
 
-    /**
-     * Default constructor
-     */
-    public ProfilePage() {
+    public ProfilePage() {}
+
+    public User displayProfile(int userId) { return new ProfileController().displayProfile(userId); }
+
+    public Map<String,Object> displayEditableFields(int userId) { return new ProfileController().displayEditableFields(userId); }
+
+    public User updateProfile(Map<String,Object> formData) {
+        int userId = (int) formData.get("userId");
+        return new ProfileController().updateProfile(userId, formData);
     }
 
-    /**
-     * @param userId
-     */
-    public void displayProfile(int userId) {
-        // TODO implement here
-    }
+    public void showMsg(String message) { /* UI */ }
 
-    /**
-     * @param userId
-     */
-    public void displayEditableFields(int userId) {
-        // TODO implement here
-    }
+    public void showError(String message) { /* UI */ }
 
-    /**
-     * @param formData
-     */
-    public void updateProfile(void formData) {
-        // TODO implement here
-    }
+    public void addSkill(int skillId) { /* boundary-only: need userId in real flow */ }
 
-    /**
-     * @param message
-     */
-    public void showMsg(String message) {
-        // TODO implement here
-    }
-
-    /**
-     * @param message
-     */
-    public void showError(String message) {
-        // TODO implement here
-    }
-
-    /**
-     * @param skillId 
-     * @param proficiency
-     */
-    public void addSkill(int skillId) {
-        // TODO implement here
-    }
-
-    /**
-     * @param skillId
-     */
-    public void removeSkill(int skillId) {
-        // TODO implement here
-    }
-
+    public void removeSkill(int skillId) { /* boundary-only */ }
 }
