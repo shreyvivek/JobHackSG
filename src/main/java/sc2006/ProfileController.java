@@ -1,6 +1,9 @@
 package sc2006;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import static sc2006.Exceptions.*;
 
 public class ProfileController {
@@ -46,15 +49,19 @@ public class ProfileController {
     public void addSkill(int userId, int skillId){
         var skill = InMemoryStore.SKILLS.get(skillId);
         if(skill == null) throw new NotFound("Skill not found");
-        var list = InMemoryStore.USER_SKILLS.computeIfAbsent(userId, k->new ArrayList<>());
-        boolean exists = list.stream().anyMatch(us -> us.getSkillId()==skillId);
-        if(!exists) list.add(new UserSkill(userId, skillId, 3, "self"));
+        List<UserSkill> userSkills = InMemoryStore.USER_SKILLS.get(userId);
+        if (userSkills == null) {
+            userSkills = new ArrayList<>();
+            InMemoryStore.USER_SKILLS.put(userId, userSkills);
+        }
+        boolean exists = userSkills.stream().anyMatch(userSkill -> userSkill.getSkillId() == skillId);
+        if(!exists) userSkills.add(new UserSkill(userId, skillId, 3, "self"));
     }
     public void insertSkill(int userId, int skillId){ addSkill(userId, skillId); }
 
     public void deleteSkill(int userId, int skillId){
-        var list = InMemoryStore.USER_SKILLS.getOrDefault(userId, new ArrayList<>());
-        list.removeIf(us -> us.getSkillId()==skillId);
+        List<UserSkill> userSkills = InMemoryStore.USER_SKILLS.getOrDefault(userId, new ArrayList<>());
+        userSkills.removeIf(userSkill -> userSkill.getSkillId() == skillId);
     }
     public void removeSkill(int userId, int skillId){ deleteSkill(userId, skillId); }
 

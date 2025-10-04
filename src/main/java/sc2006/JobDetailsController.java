@@ -1,6 +1,7 @@
 package sc2006;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import static sc2006.Exceptions.*;
 
 public class JobDetailsController {
@@ -21,8 +22,12 @@ public class JobDetailsController {
     /** UC-9 save/unsave */
     public void saveJob(int userId, int jobId) {
         var job = getJob(jobId);
-        var list = InMemoryStore.SAVED_BY_USER.computeIfAbsent(userId, k->new ArrayList<>());
-        if(!list.contains(job.getJobId())) list.add(job.getJobId());
+        List<Integer> savedJobIds = InMemoryStore.SAVED_BY_USER.get(userId);
+        if (savedJobIds == null) {
+            savedJobIds = new ArrayList<>();
+            InMemoryStore.SAVED_BY_USER.put(userId, savedJobIds);
+        }
+        if(!savedJobIds.contains(job.getJobId())) savedJobIds.add(job.getJobId());
     }
 
     /** overload kept for template compatibility (no userId) — not used */

@@ -1,7 +1,8 @@
 package sc2006;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminIngestionController {
 
@@ -31,7 +32,12 @@ public class AdminIngestionController {
 
     public IngestionRun recheckIngestion(int runId) {
         // simply append a check log
-        InMemoryStore.RUN_LOGS.computeIfAbsent(runId, k->new ArrayList<>()).add("Rechecked at " + LocalDateTime.now());
+        List<String> logs = InMemoryStore.RUN_LOGS.get(runId);
+        if (logs == null) {
+            logs = new ArrayList<>();
+            InMemoryStore.RUN_LOGS.put(runId, logs);
+        }
+        logs.add("Rechecked at " + LocalDateTime.now());
         return InMemoryStore.INGESTION_RUNS.stream().filter(r -> r.getRunId()==runId).findFirst().orElse(null);
     }
 }
