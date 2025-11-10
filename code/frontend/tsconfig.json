@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    // File Layout
+    // "rootDir": "./src",
+    // "outDir": "./dist",
+
+    // Environment Settings
+    "module": "ES2020",
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["DOM", "ES2020"],    
+
+    // Types – leave empty instead of []
+    "types": [],
+
+    // Other Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Recommended Options
+    "strict": true,
+    "jsx": "react-jsx",
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "moduleDetection": "force",
+    "noUncheckedSideEffectImports": true
+  }
+}

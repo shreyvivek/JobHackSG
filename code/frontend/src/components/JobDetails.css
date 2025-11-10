@@ -1,0 +1,89 @@
+/* JobDetails.css */
+.job-details-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(60, 80, 180, 0.12);
+  padding: 32px 40px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.job-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #3a3a5a;
+  margin-bottom: 8px;
+}
+.job-meta {
+  display: flex;
+  gap: 18px;
+  font-size: 1.1rem;
+  color: #6a6a8a;
+  margin-bottom: 18px;
+}
+.job-salary {
+  font-size: 1.1rem;
+  color: #4a7cff;
+  margin-bottom: 10px;
+}
+.job-type {
+  font-size: 1rem;
+  color: #7a7a9a;
+  margin-bottom: 18px;
+}
+.job-description {
+  font-size: 1.08rem;
+  color: #444;
+  margin-bottom: 22px;
+  line-height: 1.6;
+}
+.job-section {
+  margin-bottom: 18px;
+}
+.job-section-title {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #3a3a5a;
+  margin-bottom: 6px;
+}
+.job-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.job-list-item {
+  background: #e7eaff;
+  color: #3a3a5a;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.98rem;
+}
+.job-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.job-benefit-item {
+  background: #d1f7e7;
+  color: #2a7a5a;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.98rem;
+}
+.job-apply-btn {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 32px;
+  background: linear-gradient(90deg, #4a7cff 0%, #7f53ff 100%);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(60, 80, 180, 0.10);
+  transition: background 0.2s;
+}
+.job-apply-btn:hover {
+  background: linear-gradient(90deg, #7f53ff 0%, #4a7cff 100%);
+}

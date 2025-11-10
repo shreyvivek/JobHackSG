@@ -1,0 +1,19 @@
+package sc2006;
+
+import java.util.*;
+
+public class CourseControllerOld {
+
+    public CourseControllerOld() {}
+
+    /** UC-11: suggest courses for missing skills (very simple demo) */
+    public List<Course> suggestCourses(Skill[] missingSkills) {
+        List<Course> out = new ArrayList<>();
+        for(var c : InMemoryStore.COURSES.values()) out.add(c);
+        return out;
+    }
+
+    public Optional<Course> fetchCourseDetails(int courseId) {
+        return Optional.ofNullable(InMemoryStore.COURSES.get(courseId));
+    }
+}
